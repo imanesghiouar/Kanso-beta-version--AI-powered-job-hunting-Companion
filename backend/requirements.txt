@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+langchain-google-genai
+langchain-core
+python-dotenv
+pydantic
+python-multipart
+pdfplumber
+google-genai

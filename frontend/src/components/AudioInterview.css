@@ -1,0 +1,226 @@
+/* ── Full-screen interview overlay ────────────────────────── */
+.interview-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.interview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 40px 24px;
+  width: 100%;
+  max-width: 420px;
+}
+
+/* ── Timer ────────────────────────────────────────────────── */
+.interview-timer {
+  font-size: 52px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 2px;
+  color: var(--text);
+  opacity: 0.88;
+}
+
+/* ── Status ───────────────────────────────────────────────── */
+.interview-status {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  min-height: 22px;
+  text-align: center;
+}
+
+.interview-status.active {
+  color: var(--green);
+}
+
+.interview-status.ended {
+  color: #ff5252;
+}
+
+/* ── Avatar with animated rings ───────────────────────────── */
+.interview-avatar-wrap {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 28px 0;
+}
+
+.av-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  opacity: 0.1;
+  transition: all 0.4s ease;
+}
+
+.ring-1 {
+  width: 100%;
+  height: 100%;
+}
+.ring-2 {
+  width: 130%;
+  height: 130%;
+  top: -15%;
+  left: -15%;
+}
+.ring-3 {
+  width: 160%;
+  height: 160%;
+  top: -30%;
+  left: -30%;
+}
+
+/* Idle (connecting) — gentle breathing */
+.interview-avatar-wrap.connecting .interview-avatar {
+  animation: breathe 2.2s ease-in-out infinite;
+}
+.interview-avatar-wrap.connecting .ring-1 {
+  animation: breathe-ring 2.2s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+@keyframes breathe-ring {
+  0%, 100% { opacity: 0.1; transform: scale(1); }
+  50% { opacity: 0.25; transform: scale(1.03); }
+}
+
+/* Speaking — active pulse rings */
+.interview-avatar-wrap.speaking .ring-1 {
+  opacity: 0.35;
+  animation: pulse-ring 1.4s ease-in-out infinite;
+}
+.interview-avatar-wrap.speaking .ring-2 {
+  opacity: 0.22;
+  animation: pulse-ring 1.4s ease-in-out infinite 0.25s;
+}
+.interview-avatar-wrap.speaking .ring-3 {
+  opacity: 0.12;
+  animation: pulse-ring 1.4s ease-in-out infinite 0.5s;
+}
+
+@keyframes pulse-ring {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.1;
+  }
+  50% {
+    transform: scale(1.09);
+    opacity: 0.4;
+  }
+}
+
+/* Avatar circle */
+.interview-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #a78bfa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 34px;
+  font-weight: 800;
+  z-index: 1;
+  box-shadow: 0 0 30px rgba(108, 92, 231, 0.25);
+  transition: box-shadow 0.4s, transform 0.4s;
+}
+
+.interview-avatar-wrap.speaking .interview-avatar {
+  box-shadow: 0 0 60px rgba(108, 92, 231, 0.5);
+}
+
+/* ── Name & role ──────────────────────────────────────────── */
+.interview-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.interview-role {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: -6px;
+  text-align: center;
+}
+
+/* ── Controls row ─────────────────────────────────────────── */
+.interview-controls {
+  display: flex;
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.ctrl-btn {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ctrl-btn.mute {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.ctrl-btn.mute.active {
+  background: rgba(255, 82, 82, 0.12);
+  color: #ff5252;
+  border-color: rgba(255, 82, 82, 0.4);
+}
+
+.ctrl-btn.end {
+  background: #ff5252;
+  color: #fff;
+  transform: rotate(135deg);
+}
+
+.ctrl-btn:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+
+.ctrl-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ── Back button ──────────────────────────────────────────── */
+.interview-back-btn {
+  padding: 12px 32px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 14px;
+  transition: all 0.2s;
+}
+
+.interview-back-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}

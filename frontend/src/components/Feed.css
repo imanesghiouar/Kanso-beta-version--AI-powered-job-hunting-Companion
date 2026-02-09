@@ -1,0 +1,439 @@
+/* ── Feed layout ─────────────────────────────────────────── */
+.feed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 420px;
+}
+
+/* ── Top bar ─────────────────────────────────────────────── */
+.feed-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.feed-counter {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.filter-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-toggle:hover,
+.filter-toggle.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── Filters ─────────────────────────────────────────────── */
+.feed-filters {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.ff-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ff-group label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ff-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ff-pill {
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ff-pill:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.ff-pill.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.ff-select {
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 12px;
+  outline: none;
+  max-width: 200px;
+}
+
+/* ── Source badge ─────────────────────────────────────────── */
+.source-badge {
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.source-badge.kanso {
+  background: rgba(108, 92, 231, 0.12);
+  color: var(--accent);
+}
+
+.source-badge.external {
+  background: rgba(0, 184, 148, 0.12);
+  color: var(--green);
+}
+
+.card-stack {
+  position: relative;
+  width: 100%;
+  min-height: 480px;
+}
+
+/* ── Ghost card behind ───────────────────────────────────── */
+.ghost-card {
+  position: absolute;
+  inset: 0;
+  top: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.96);
+  opacity: 0.5;
+}
+
+.ghost-company {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* ── Job Card ────────────────────────────────────────────── */
+.job-card {
+  position: absolute;
+  inset: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  cursor: grab;
+  touch-action: pan-y;
+  overflow-y: auto;
+  max-height: 540px;
+}
+
+.job-card.expanded {
+  max-height: 70vh;
+}
+
+.job-card:active {
+  cursor: grabbing;
+}
+
+/* ── Swipe labels ────────────────────────────────────────── */
+.swipe-label {
+  position: absolute;
+  top: 28px;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  padding: 6px 18px;
+  border-radius: 10px;
+  border: 3px solid;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.swipe-label.nope {
+  right: 24px;
+  color: var(--red);
+  border-color: var(--red);
+  transform: rotate(22deg);
+}
+
+.swipe-label.like {
+  left: 24px;
+  color: var(--green);
+  border-color: var(--green);
+  transform: rotate(-22deg);
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-header-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.company-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  object-fit: cover;
+  background: var(--surface);
+}
+
+.job-title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.company-name {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+/* ── Meta row ────────────────────────────────────────────── */
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.card-meta span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ── Tags ────────────────────────────────────────────────── */
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(108, 92, 231, 0.15);
+  color: var(--accent);
+}
+
+/* ── Body ────────────────────────────────────────────────── */
+.card-summary {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.card-description {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.card-description p {
+  margin-bottom: 6px;
+}
+
+/* ── Expand button ───────────────────────────────────────── */
+.expand-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.expand-btn:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+/* ── Action buttons ──────────────────────────────────────── */
+.actions {
+  display: flex;
+  gap: 24px;
+}
+
+.action-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.action-btn:hover {
+  transform: scale(1.1);
+}
+
+.action-btn.reject:hover {
+  border-color: var(--red);
+  color: var(--red);
+  background: rgba(225, 112, 85, 0.1);
+}
+
+.action-btn.accept:hover {
+  border-color: var(--green);
+  color: var(--green);
+  background: rgba(0, 184, 148, 0.1);
+}
+
+/* ── Empty state ─────────────────────────────────────────── */
+.feed-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.feed-empty h2 {
+  font-size: 22px;
+}
+
+.feed-empty p {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.empty-icon {
+  font-size: 48px;
+}
+
+/* ── Loader ──────────────────────────────────────────────── */
+.loader {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Swipe hint ──────────────────────────────────────────── */
+.swipe-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  opacity: 0.6;
+}
+
+/* ── Mobile responsive ───────────────────────────────────── */
+@media (max-width: 480px) {
+  .feed {
+    max-width: 100%;
+  }
+
+  .card-stack {
+    min-height: 420px;
+  }
+
+  .job-card {
+    padding: 20px 16px;
+    max-height: 460px;
+  }
+
+  .job-title {
+    font-size: 17px;
+  }
+
+  .company-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+
+  .action-btn {
+    width: 56px;
+    height: 56px;
+  }
+
+  .ff-pills {
+    gap: 4px;
+  }
+
+  .ff-pill {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+}

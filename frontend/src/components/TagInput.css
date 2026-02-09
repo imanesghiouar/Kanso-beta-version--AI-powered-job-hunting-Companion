@@ -1,0 +1,111 @@
+/* ── Tag Input Component ─────────────────────────────────── */
+.tag-input-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.tag-input-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  min-height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  cursor: text;
+  transition: border-color 0.2s;
+}
+
+.tag-input-box:focus-within {
+  border-color: var(--accent);
+}
+
+/* ── Chips ────────────────────────────────────────────────── */
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: rgba(108, 92, 231, 0.12);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  user-select: none;
+  animation: chipIn 0.15s ease-out;
+}
+
+@keyframes chipIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.tag-chip-x {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.15s;
+}
+
+.tag-chip-x:hover {
+  opacity: 1;
+}
+
+/* ── Input field ─────────────────────────────────────────── */
+.tag-input-field {
+  flex: 1;
+  min-width: 100px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 13px;
+  padding: 2px 0;
+}
+
+.tag-input-field::placeholder {
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+/* ── Dropdown ────────────────────────────────────────────── */
+.tag-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 50;
+}
+
+.tag-dropdown-item {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.tag-dropdown-item:hover,
+.tag-dropdown-item.focused {
+  background: rgba(108, 92, 231, 0.1);
+  color: var(--accent);
+}

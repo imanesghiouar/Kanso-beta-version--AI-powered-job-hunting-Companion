@@ -1,0 +1,18 @@
+# Use Node alpine for a small footprint
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Add /app/node_modules/.bin to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+# Install deps (cached unless package.json changes)
+COPY package.json package-lock.json* ./
+RUN npm install --silent
+
+# Copy source
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "start"]

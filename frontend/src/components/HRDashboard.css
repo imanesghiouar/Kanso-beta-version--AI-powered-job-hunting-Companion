@@ -1,0 +1,502 @@
+/* ── HR Dashboard layout ─────────────────────────────────── */
+.hr-dashboard {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hr-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 400px;
+  color: var(--text-muted);
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+.hr-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hr-title {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.hr-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.hr-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 12px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.hr-add-btn:hover {
+  filter: brightness(1.15);
+}
+
+/* ── Form ────────────────────────────────────────────────── */
+.hr-form {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.hr-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.hr-form-grid input,
+.hr-form-grid select,
+.hr-form-full,
+.hr-form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.hr-form-grid input:focus,
+.hr-form-grid select:focus,
+.hr-form-full:focus,
+.hr-form textarea:focus {
+  border-color: var(--accent);
+}
+
+.hr-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.hr-form-error {
+  font-size: 13px;
+  color: var(--red);
+  text-align: center;
+  padding: 8px;
+  border-radius: 10px;
+  background: rgba(225, 112, 85, 0.08);
+}
+
+.hr-submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: var(--green);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.hr-submit-btn:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+
+.hr-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Quick Tags ──────────────────────────────────────────── */
+.hr-quick-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.quick-tag {
+  padding: 5px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.quick-tag:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.quick-tag.active {
+  background: rgba(108, 92, 231, 0.12);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── Empty state ─────────────────────────────────────────── */
+.hr-empty-inline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 40px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.hr-empty-inline h3 {
+  font-size: 18px;
+  color: var(--text);
+}
+
+.hr-empty-inline p {
+  font-size: 14px;
+}
+
+/* ── Job Cards ───────────────────────────────────────────── */
+.hr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hr-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.2s;
+}
+
+.hr-card:hover {
+  border-color: var(--accent);
+}
+
+.hr-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hr-card-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hr-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.hr-card-title {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.hr-card-company {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.hr-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.hr-card-meta span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hr-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.htag {
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: rgba(108, 92, 231, 0.1);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.hr-card-summary {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.hr-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hr-card-date {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.hr-delete-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border: 1px solid rgba(225, 112, 85, 0.3);
+  border-radius: 8px;
+  background: rgba(225, 112, 85, 0.08);
+  color: var(--red);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.hr-delete-btn:hover {
+  background: rgba(225, 112, 85, 0.2);
+}
+
+/* ── Source badge (shared) ───────────────────────────────── */
+.source-badge {
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.source-badge.kanso {
+  background: rgba(108, 92, 231, 0.12);
+  color: var(--accent);
+}
+
+.source-badge.external {
+  background: rgba(0, 184, 148, 0.12);
+  color: var(--green);
+}
+
+/* ── HR Tabs ─────────────────────────────────────────────── */
+.hr-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 4px;
+}
+
+.hr-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.hr-tab.active {
+  background: var(--card);
+  color: var(--text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.hr-tab:hover:not(.active) {
+  color: var(--text);
+}
+
+.tab-badge {
+  background: var(--accent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 8px;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* ── Application Cards ───────────────────────────────────── */
+.hr-apps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hr-app-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.2s;
+}
+
+.hr-app-card:hover {
+  border-color: var(--accent);
+}
+
+.app-card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-card-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #a29bfe);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.app-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.app-card-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.app-card-headline {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-card-role {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.app-card-role strong {
+  color: var(--text);
+}
+
+.app-card-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.app-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.app-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.app-action-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.app-action-btn.accent {
+  background: rgba(108, 92, 231, 0.1);
+  border-color: rgba(108, 92, 231, 0.3);
+  color: var(--accent);
+}
+
+.app-action-btn.accent:hover {
+  background: var(--accent);
+  color: #fff;
+}
