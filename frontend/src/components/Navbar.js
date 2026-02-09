@@ -51,7 +51,7 @@ export default function Navbar({ page, setPage, user, onLogout }) {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <span className="brand-icon">簡</span>
+        <img src="/logo.png" alt="KansoAI" className="brand-logo" />
         <span className="brand-text">KansoAI</span>
       </div>
 

@@ -53,8 +53,8 @@ export default function Login({ onLogin }) {
       >
         {/* Brand */}
         <div className="login-brand">
-          <span className="login-brand-icon">簡</span>
-          <h1>KansoAI</h1>
+          <img src="/logo.png" alt="KansoAI" className="login-brand-logo" />
+          <h1 className="login-brand-text">KansoAI</h1>
           <p className="login-tagline">Swipe. Apply. Get hired.</p>
         </div>
 

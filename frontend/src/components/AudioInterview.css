@@ -113,6 +113,38 @@
   animation: pulse-ring 1.4s ease-in-out infinite 0.5s;
 }
 
+/* Listening — green pulse to show mic active */
+.interview-avatar-wrap.listening .ring-1 {
+  border-color: var(--green);
+  opacity: 0.4;
+  animation: listen-ring 1.8s ease-in-out infinite;
+}
+.interview-avatar-wrap.listening .ring-2 {
+  border-color: var(--green);
+  opacity: 0.25;
+  animation: listen-ring 1.8s ease-in-out infinite 0.2s;
+}
+.interview-avatar-wrap.listening .ring-3 {
+  border-color: var(--green);
+  opacity: 0.12;
+  animation: listen-ring 1.8s ease-in-out infinite 0.4s;
+}
+
+.interview-avatar-wrap.listening .interview-avatar {
+  box-shadow: 0 0 40px rgba(0, 200, 83, 0.4);
+}
+
+@keyframes listen-ring {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.15;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.35;
+  }
+}
+
 @keyframes pulse-ring {
   0%, 100% {
     transform: scale(1);
@@ -205,22 +237,41 @@
   cursor: not-allowed;
 }
 
-/* ── Back button ──────────────────────────────────────────── */
-.interview-back-btn {
-  padding: 12px 32px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--surface);
-  color: var(--text);
-  font-family: var(--font);
+/* ── Speech preview (shows what user is saying) ───────────── */
+.interview-speech-preview {
   font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 14px;
-  transition: all 0.2s;
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+  max-width: 320px;
+  min-height: 24px;
+  padding: 8px 16px;
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  margin-bottom: 8px;
+  animation: fadeIn 0.3s ease;
 }
 
-.interview-back-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+
+/* Processing state */
+.interview-avatar-wrap.processing .ring-1 {
+  border-color: var(--accent);
+  opacity: 0.3;
+  animation: spin 2s linear infinite;
+}
+.interview-avatar-wrap.processing .ring-2 {
+  border-color: var(--accent);
+  opacity: 0.2;
+  animation: spin 2s linear infinite reverse;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+

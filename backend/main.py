@@ -1350,7 +1350,8 @@ def hr_delete_job(job_id: str, user_id: str = Query(...), db: Session = Depends(
     return {"message": "Job removed."}
 
 
-# ── Live Audio Interview (Gemini Live API) ──────────────────
+# ── Live Audio Interview (Gemini API + Text-based) ──────────────────
+# This uses Gemini API with text messages (free solution)
 @app.websocket("/ws/interview/{application_id}")
 async def interview_websocket(websocket: WebSocket, application_id: str):
     await websocket.accept()
@@ -1388,7 +1389,7 @@ async def interview_websocket(websocket: WebSocket, application_id: str):
             )
         sys_instr += (
             "Guidelines:\n"
-            "- Greet the candidate warmly and introduce yourself briefly\n"
+            "- Greet the candidate warmly (do NOT introduce yourself with a name)\n"
             "- Ask behavioral and technical questions relevant to the role\n"
             "- Give brief, encouraging feedback on answers\n"
             "- Keep your responses concise (under 30 seconds of speech)\n"
@@ -1396,58 +1397,96 @@ async def interview_websocket(websocket: WebSocket, application_id: str):
             "- After 4-5 questions, wrap up with closing remarks and feedback"
         )
 
-        # 4. Connect to Gemini Live API
-        from google import genai
-        client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+        # 4. Initialize Gemini text-based conversation using langchain
+        from langchain_google_genai import ChatGoogleGenerativeAI
+        from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+        
+        llm = ChatGoogleGenerativeAI(
+            model="gemini-2.5-flash",
+            google_api_key=os.getenv("GOOGLE_API_KEY"),
+            max_retries=3,
+        )
+        
+        # Start conversation with system prompt
+        conversation_history = [SystemMessage(content=sys_instr)]
+        question_count = [0]  # Track number of questions asked
+        
+        await websocket.send_json({"type": "connected"})
 
-        config = {
-            "response_modalities": ["AUDIO"],
-            "system_instruction": sys_instr,
-        }
+        async def handle_user_message():
+            """Receive transcribed text from browser and send to Gemini."""
+            try:
+                while True:
+                    msg = await websocket.receive_json()
+                    if msg.get("type") == "user_transcript":
+                        user_text = msg.get("transcript", "").strip()
+                        if not user_text:
+                            continue
+                        
+                        # Add user message to history
+                        conversation_history.append(HumanMessage(content=user_text))
+                        
+                        # Get AI response from Gemini
+                        try:
+                            response = await llm.ainvoke(conversation_history)
+                            ai_response = response.content.strip()
+                            question_count[0] += 1
+                            
+                            # Add AI response to history
+                            conversation_history.append(AIMessage(content=ai_response))
+                            
+                            # Send response back to browser (text)
+                            await websocket.send_json({
+                                "type": "ai_response",
+                                "text": ai_response,
+                                "turn_complete": True
+                            })
+                            
+                            # End interview after 5 questions
+                            if question_count[0] >= 5:
+                                # Get closing remarks from AI
+                                conversation_history.append(HumanMessage(content="The interview is now complete. Please thank the candidate, give brief overall feedback on their performance, and say goodbye."))
+                                closing_response = await llm.ainvoke(conversation_history)
+                                closing_text = closing_response.content.strip()
+                                
+                                await websocket.send_json({
+                                    "type": "ai_response",
+                                    "text": closing_text,
+                                    "turn_complete": True
+                                })
+                                
+                                await websocket.send_json({
+                                    "type": "interview_end",
+                                    "message": "Interview complete."
+                                })
+                        except Exception as e:
+                            logger.error("Gemini error: %s", e)
+                            await websocket.send_json({
+                                "type": "error",
+                                "message": "Failed to get response from AI interviewer."
+                            })
+            except (WebSocketDisconnect, Exception) as e:
+                if not isinstance(e, WebSocketDisconnect):
+                    logger.error("handle_user_message error: %s", e)
 
-        async with client.aio.live.connect(
-            model="gemini-2.5-flash-native-audio-dialog",
-            config=config,
-        ) as session:
-            await websocket.send_json({"type": "connected"})
-
-            async def browser_to_gemini():
-                """Forward mic audio from browser → Gemini."""
-                try:
-                    while True:
-                        data = await websocket.receive_bytes()
-                        await session.send_realtime_input(
-                            audio={"data": data, "mime_type": "audio/pcm"}
-                        )
-                except (WebSocketDisconnect, Exception):
-                    pass
-
-            async def gemini_to_browser():
-                """Forward Gemini audio → browser speaker."""
-                try:
-                    while True:
-                        turn = session.receive()
-                        async for response in turn:
-                            if (response.server_content
-                                    and response.server_content.model_turn):
-                                for part in response.server_content.model_turn.parts:
-                                    if (part.inline_data
-                                            and isinstance(part.inline_data.data, bytes)):
-                                        await websocket.send_bytes(part.inline_data.data)
-                            # Signal when AI finishes a turn
-                            sc = getattr(response, "server_content", None)
-                            if sc and getattr(sc, "turn_complete", False):
-                                await websocket.send_json({"type": "turn_complete"})
-                except (WebSocketDisconnect, Exception):
-                    pass
-
-            tasks = [
-                asyncio.create_task(browser_to_gemini()),
-                asyncio.create_task(gemini_to_browser()),
-            ]
-            done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
-            for t in pending:
-                t.cancel()
+        # Send initial greeting
+        try:
+            conversation_history.append(HumanMessage(content="Start the interview with a warm greeting. Do not introduce yourself with a name, just say hello and welcome the candidate, then ask the first interview question."))
+            greeting_response = await llm.ainvoke(conversation_history)
+            greeting_text = greeting_response.content.strip()
+            conversation_history.append(AIMessage(content=greeting_text))
+            question_count[0] += 1
+            
+            await websocket.send_json({
+                "type": "ai_response",
+                "text": greeting_text,
+                "turn_complete": True
+            })
+        except Exception as e:
+            logger.error("Greeting error: %s", e)
+        
+        # Handle incoming user messages
+        await handle_user_message()
 
     except WebSocketDisconnect:
         logger.info("Interview WS disconnected: %s", application_id)
