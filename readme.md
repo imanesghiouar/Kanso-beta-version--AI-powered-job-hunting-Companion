@@ -86,7 +86,7 @@ docker-compose up -d
 | **Frontend** | React 18, Framer Motion, React Icons |
 | **Backend** | FastAPI (Python 3.11), SQLAlchemy |
 | **Database** | PostgreSQL 16 with pgvector |
-| **AI** | Google Gemini 2.5 Flash |
+| **AI** | Google Gemini 3 |
 | **Voice** | Web Speech API (Speech Recognition + Speech Synthesis) |
 | **Resume** | LaTeX → PDF (pdflatex, Jake Ryan template) |
 | **PDF Parse** | pdfplumber (pure Python) |
