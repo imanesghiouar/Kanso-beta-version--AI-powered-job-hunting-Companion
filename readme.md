@@ -18,7 +18,6 @@
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/yourusername/kansoai.git
 cd kansoai
 
 # 2. Set up environment variables
