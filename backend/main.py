@@ -310,7 +310,7 @@ def get_llm():
         from langchain_google_genai import ChatGoogleGenerativeAI
 
         _llm = ChatGoogleGenerativeAI(
-            model="gemini-2.5-flash",
+            model="gemini-3-pro-preview",
             google_api_key=api_key,
             max_retries=3,
         )
@@ -1402,7 +1402,7 @@ async def interview_websocket(websocket: WebSocket, application_id: str):
         from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
         
         llm = ChatGoogleGenerativeAI(
-            model="gemini-2.5-flash",
+            model="gemini-3-pro-preview",
             google_api_key=os.getenv("GOOGLE_API_KEY"),
             max_retries=3,
         )
